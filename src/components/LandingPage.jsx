@@ -8,7 +8,8 @@ import {
   Play,
   Zap,
   BookOpen,
-  Users
+  Users,
+  ExternalLink
 } from 'lucide-react';
 
 const LandingPage = () => {
@@ -16,81 +17,73 @@ const LandingPage = () => {
     {
       title: "Sorting Algorithms",
       description: "Visualize how data gets organized step by step",
-      icon: <BarChart3 className="w-8 h-8" />,
+      icon: <BarChart3 className="w-6 h-6" />,
       algorithms: ["Bubble Sort", "Merge Sort", "Quick Sort", "Heap Sort"],
-      color: "from-blue-500 to-purple-600",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200"
+      color: "from-purple-500 to-violet-600",
     },
     {
-      title: "Searching Algorithms",
+      title: "Searching Algorithms", 
       description: "Watch how algorithms find elements efficiently",
-      icon: <Search className="w-8 h-8" />,
+      icon: <Search className="w-6 h-6" />,
       algorithms: ["Binary Search", "Linear Search", "Jump Search"],
-      color: "from-green-500 to-teal-600",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200"
+      color: "from-blue-500 to-purple-600",
     },
     {
       title: "Graph Algorithms",
       description: "Explore pathfinding and graph traversal methods",
-      icon: <GitBranch className="w-8 h-8" />,
+      icon: <GitBranch className="w-6 h-6" />,
       algorithms: ["Dijkstra", "BFS", "DFS", "A* Search"],
-      color: "from-orange-500 to-red-600",
-      bgColor: "bg-orange-50",
-      borderColor: "border-orange-200"
+      color: "from-violet-500 to-purple-600",
     },
     {
       title: "Tree Traversals",
-      description: "Navigate through tree structures systematically",
-      icon: <TreePine className="w-8 h-8" />,
+      description: "Navigate through tree structures systematically", 
+      icon: <TreePine className="w-6 h-6" />,
       algorithms: ["Inorder", "Preorder", "Postorder", "Level Order"],
-      color: "from-purple-500 to-pink-600",
-      bgColor: "bg-purple-50",
-      borderColor: "border-purple-200"
+      color: "from-indigo-500 to-purple-600",
     }
   ];
 
   const features = [
     {
-      icon: <Play className="w-6 h-6" />,
+      icon: <Play className="w-5 h-5" />,
       title: "Interactive Visualizations",
-      description: "Step through algorithms at your own pace with play, pause, and speed controls"
+      description: "Step through algorithms at your own pace with intuitive controls"
     },
     {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Real-time Execution",
-      description: "Watch algorithms execute in real-time with highlighted steps and comparisons"
+      icon: <Zap className="w-5 h-5" />,
+      title: "Real-time Execution", 
+      description: "Watch algorithms execute with highlighted steps and comparisons"
     },
     {
-      icon: <BookOpen className="w-6 h-6" />,
+      icon: <BookOpen className="w-5 h-5" />,
       title: "Educational Content",
-      description: "Learn with detailed explanations, complexity analysis, and use cases"
+      description: "Learn with detailed explanations and complexity analysis"
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <Users className="w-5 h-5" />,
       title: "Beginner Friendly",
-      description: "Perfect for students, developers, and anyone curious about algorithms"
+      description: "Perfect for students and developers at any level"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-dark-950 text-white">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+      <nav className="glass-effect sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-violet-600 rounded-lg flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold gradient-text">AlgoFlow</span>
+              <span className="text-xl font-bold">AlgoFlow</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#algorithms" className="text-gray-600 hover:text-gray-900 transition-colors">Algorithms</a>
-              <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-              <a href="#about" className="text-gray-600 hover:text-gray-900 transition-colors">About</a>
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300">
+              <a href="#algorithms" className="text-gray-300 hover:text-white transition-colors">Algorithms</a>
+              <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
+              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
+              <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25">
                 Get Started
               </button>
             </div>
@@ -99,69 +92,80 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+      <section className="relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 hero-glow"></div>
+        <div className="absolute top-20 left-20 w-72 h-72 floating-orb rounded-full animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 floating-orb rounded-full animate-float" style={{animationDelay: '2s'}}></div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center animate-fade-in">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6">
-              Visualize DSA
+            <div className="mb-6">
+              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                AlgoFlow 2025 Release
+              </span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+              <span className="block text-white">Visualize DSA</span>
               <span className="block gradient-text">Algorithms Instantly</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              An interactive way to understand how algorithms work. 
-              Watch sorting, searching, and graph algorithms come to life through beautiful visualizations.
+            
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+              An interactive way to understand how algorithms work. The default tool among students 
+              now also powers a wide range of educational institutions, including universities, 
+              coding bootcamps, and online learning platforms.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+              <button className="group bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 flex items-center space-x-2 hover:shadow-lg hover:shadow-purple-500/25">
                 <span>Start Visualizing</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl text-lg font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all duration-300">
-                Explore Algorithms
+              
+              <button className="group glass-effect text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition-all duration-300 flex items-center space-x-2">
+                <ExternalLink className="w-5 h-5" />
+                <span>Learn more about our 2025 release</span>
               </button>
             </div>
           </div>
         </div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-blue-200 rounded-full opacity-20 animate-bounce-gentle"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-purple-200 rounded-full opacity-20 animate-bounce-gentle" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-20 left-20 w-12 h-12 bg-green-200 rounded-full opacity-20 animate-bounce-gentle" style={{animationDelay: '2s'}}></div>
       </section>
 
       {/* Algorithm Categories */}
-      <section id="algorithms" className="py-20 bg-gray-50">
+      <section id="algorithms" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Explore Algorithm Categories
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Algorithm Categories
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Dive deep into different types of algorithms with interactive visualizations
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {algorithmCategories.map((category, index) => (
               <div 
                 key={index}
-                className={`card-hover bg-white rounded-2xl p-6 border-2 ${category.borderColor} ${category.bgColor} cursor-pointer group`}
+                className="card-hover glass-effect rounded-2xl p-6 cursor-pointer group"
                 style={{animationDelay: `${index * 0.1}s`}}
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{category.title}</h3>
-                <p className="text-gray-600 mb-4">{category.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{category.title}</h3>
+                <p className="text-gray-300 mb-4 text-sm leading-relaxed">{category.description}</p>
                 <div className="space-y-2">
                   {category.algorithms.map((algo, algoIndex) => (
                     <div key={algoIndex} className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                      <span className="text-sm text-gray-700">{algo}</span>
+                      <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
+                      <span className="text-sm text-gray-400">{algo}</span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <span className="text-sm font-medium text-blue-600 group-hover:text-blue-700 flex items-center">
+                <div className="mt-6 pt-4 border-t border-gray-700">
+                  <span className="text-sm font-medium text-purple-400 group-hover:text-purple-300 flex items-center transition-colors">
                     Explore <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
@@ -172,13 +176,13 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      <section id="features" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Why Choose AlgoFlow?
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Learn algorithms the visual way with our comprehensive platform
             </p>
           </div>
@@ -186,11 +190,11 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-violet-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className="text-lg font-semibold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -198,38 +202,39 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+      <section className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-violet-600/20"></div>
+        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Master Algorithms?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
             Join thousands of students and developers who are learning algorithms the visual way
           </p>
-          <button className="bg-white text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl">
+          <button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25">
             Start Learning Now
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="border-t border-gray-800 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-violet-600 rounded-lg flex items-center justify-center">
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold">AlgoFlow</span>
+                <span className="text-xl font-bold text-white">AlgoFlow</span>
               </div>
-              <p className="text-gray-400 mb-4">
+              <p className="text-gray-400 leading-relaxed">
                 Making algorithms accessible through interactive visualizations. 
                 Learn, explore, and master data structures and algorithms.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Algorithms</h4>
+              <h4 className="font-semibold text-white mb-4">Algorithms</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><a href="#" className="hover:text-white transition-colors">Sorting</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Searching</a></li>
@@ -238,7 +243,7 @@ const LandingPage = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
+              <h4 className="font-semibold text-white mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Tutorials</a></li>
