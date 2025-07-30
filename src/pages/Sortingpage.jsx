@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   BarChart3, 
   Menu,
-  PlayCircle 
+  PlayCircle,
+  RotateCcw
 } from 'lucide-react';
 import P5Wrapper from '../components/P5Wrapper';
 import { bubbleSortSketch } from '../sketches/bubbleSortSketch';
+import { selectionSortSketch } from '../sketches/selectionSortSketch';
+import { insertionSortSketch } from '../sketches/insertionSortSketch';
+import { quickSortSketch } from '../sketches/quickSortSketch';
+import { heapSortSketch } from '../sketches/heapSortSketch';
+import { mergeSortSketch } from '../sketches/mergeSortSketch';
 import { BubbleSort } from '../algorithms/sorting-algos/bubblesort';
+import { SelectionSort } from '../algorithms/sorting-algos/selectionsort';
+import { InsertionSort } from '../algorithms/sorting-algos/insertionsort';
+import { QuickSort } from '../algorithms/sorting-algos/quicksort';
+import { HeapSort } from '../algorithms/sorting-algos/heapsort';
+import { MergeSort } from '../algorithms/sorting-algos/mergesort';
+import Controlbar from '../controlpannel/Controlbar';
+import AlgorithmInfo from '../components/AlgorithmInfo';
+
 
 
 
@@ -16,6 +30,13 @@ const SortingVisualizerPage = () => {
   const [started, setStarted] = useState(false);
   const [values, setValues] = useState([]);
   const [sorter, setSorter] = useState(null);
+  const [speed, setSpeed] = useState(5);
+  const [metrics, setMetrics] = useState({
+    comparisons: 0,
+    swaps: 0,
+    currentStep: 0,
+    totalSteps: 0
+  });
 
   const sortingAlgorithms = [
     "Bubble Sort", 
@@ -33,8 +54,109 @@ const SortingVisualizerPage = () => {
   const handleStart = () => {
     const arr = generateRandomArray();
     setValues(arr.slice());
-    setSorter(new BubbleSort(arr));
+    let sorterInstance;
+    switch (selectedAlgorithm) {
+      case 'Bubble Sort':
+        sorterInstance = new BubbleSort(arr);
+        break;
+      case 'Selection Sort':
+        sorterInstance = new SelectionSort(arr);
+        break;
+      case 'Insertion Sort':
+        sorterInstance = new InsertionSort(arr);
+        break;
+      case 'Quick Sort':
+        sorterInstance = new QuickSort(arr);
+        break;
+      case 'Heap Sort':
+        sorterInstance = new HeapSort(arr);
+        break;
+      case 'Merge Sort':
+        sorterInstance = new MergeSort(arr);
+        break;
+      default:
+        sorterInstance = new BubbleSort(arr);
+    }
+    setSorter(sorterInstance);
     setStarted(true);
+    // Reset metrics
+    setMetrics({
+      comparisons: 0,
+      swaps: 0,
+      currentStep: 0,
+      totalSteps: sorterInstance.getMetrics().totalSteps
+    });
+  };
+
+  const handleSpeedChange = (val) => {
+    setSpeed(val);
+    // Optionally, pass speed to your sketch or sorting logic
+  };
+
+  // Update metrics in real-time
+  useEffect(() => {
+    if (sorter && started) {
+      const interval = setInterval(() => {
+        if (sorter && !sorter.isSorted()) {
+          const currentMetrics = sorter.getMetrics();
+          setMetrics(currentMetrics);
+          
+          // Safety check: if steps exceed total steps by too much, mark as completed
+          if (currentMetrics.currentStep > currentMetrics.totalSteps * 2) {
+            sorter.sorted = true;
+            setStarted(false);
+          }
+        }
+      }, 100); // Update every 100ms
+
+      return () => clearInterval(interval);
+    }
+  }, [sorter, started]);
+
+  const handleRestart = () => {
+    // Force stop the current sorting process
+    setStarted(false);
+    // Clear the sorter and values
+    setSorter(null);
+    setValues([]);
+    // Add a small delay to ensure the sketch has time to stop
+    setTimeout(() => {
+      // Generate new random array and start fresh
+      const arr = generateRandomArray();
+      setValues(arr.slice());
+      let sorterInstance;
+      switch (selectedAlgorithm) {
+        case 'Bubble Sort':
+          sorterInstance = new BubbleSort(arr);
+          break;
+        case 'Selection Sort':
+          sorterInstance = new SelectionSort(arr);
+          break;
+        case 'Insertion Sort':
+          sorterInstance = new InsertionSort(arr);
+          break;
+        case 'Quick Sort':
+          sorterInstance = new QuickSort(arr);
+          break;
+        case 'Heap Sort':
+          sorterInstance = new HeapSort(arr);
+          break;
+        case 'Merge Sort':
+          sorterInstance = new MergeSort(arr);
+          break;
+        default:
+          sorterInstance = new BubbleSort(arr);
+      }
+      setSorter(sorterInstance);
+      setStarted(true);
+      // Reset metrics
+      setMetrics({
+        comparisons: 0,
+        swaps: 0,
+        currentStep: 0,
+        totalSteps: sorterInstance.getMetrics().totalSteps
+      });
+    }, 100);
   };
 
   // Reusable sidebar content
@@ -49,7 +171,10 @@ const SortingVisualizerPage = () => {
             onClick={(e) => {
               e.preventDefault();
               setSelectedAlgorithm(algo);
-              setStarted(false); // Reset started when changing algorithm
+              // Reset all states when changing algorithm
+              setStarted(false);
+              setSorter(null);
+              setValues([]);
               if (isSidebarOpen) setSidebarOpen(false);
             }}
             className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
@@ -67,9 +192,22 @@ const SortingVisualizerPage = () => {
 
   // Choose sketch based on selectedAlgorithm
   const getSketch = () => {
-    if (selectedAlgorithm === "Bubble Sort") return bubbleSortSketch;
-    // Add more algorithms here as needed
-    return null;
+    switch (selectedAlgorithm) {
+      case 'Bubble Sort':
+        return bubbleSortSketch;
+      case 'Selection Sort':
+        return selectionSortSketch;
+      case 'Insertion Sort':
+        return insertionSortSketch;
+      case 'Quick Sort':
+        return quickSortSketch;
+      case 'Heap Sort':
+        return heapSortSketch;
+      case 'Merge Sort':
+        return mergeSortSketch;
+      default:
+        return bubbleSortSketch;
+    }
   };
 
   return (
@@ -120,27 +258,37 @@ const SortingVisualizerPage = () => {
             <p className="text-gray-400">An interactive visualization.</p>
           </div>
 
+          {/* Algorithm Information */}
+          <AlgorithmInfo
+            selectedAlgorithm={selectedAlgorithm}
+            isSorting={started}
+            currentStep={metrics.currentStep}
+            totalSteps={metrics.totalSteps}
+            comparisons={metrics.comparisons}
+            swaps={metrics.swaps}
+            currentIndices={sorter ? sorter.getCurrentIndices() : []}
+            sortedIndices={sorter ? sorter.getSortedIndices() : []}
+            isCompleted={sorter ? sorter.isSorted() : false}
+          />
+
           {/* Controls Bar */}
-          <div className="flex-shrink-0 bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-6 flex items-center justify-between">
-            <span className="text-sm text-gray-400">Controls</span>
-            <button
-              className="group bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center space-x-2 border border-purple-500/20"
-              onClick={handleStart}
-              disabled={selectedAlgorithm !== "Bubble Sort"}
-            >
-              <PlayCircle className="w-5 h-5"/>
-              <span>Start</span>
-            </button>
-          </div>
+          <Controlbar
+            onStart={handleStart}
+            onRestart={handleRestart}
+            onSpeedChange={handleSpeedChange}
+            disabled={false}
+            speed={speed}
+          />
 
           {/* Visualization Canvas */}
-          <div className="flex-1 bg-black/20 rounded-lg border border-dashed border-gray-700 flex items-center justify-center relative">
-          <P5Wrapper
-            sketch={selectedAlgorithm === "Bubble Sort" ? bubbleSortSketch : () => {}}
-            values={values}
-            sorter={sorter}
-            isSorting={started}
-          />
+          <div className="flex-1 min-h-[400px] bg-black/20 rounded-lg border border-dashed border-gray-700 flex items-start justify-center pt-8 relative">
+            <P5Wrapper
+              sketch={getSketch()}
+              values={values}
+              sorter={sorter}
+              isSorting={started}
+              speed={speed}
+            />
           </div>
         </main>
       </div>

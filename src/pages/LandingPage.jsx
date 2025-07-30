@@ -14,77 +14,8 @@ import {
   X, // For closing modal
   LoaderCircle // For loading states
 } from 'lucide-react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-/**
- * A full, modern, dark-themed landing page for an algorithm visualization tool.
- * It includes a sticky navigation bar, a dynamic hero section, detailed feature
- * and category cards, a call-to-action, and a comprehensive footer.
- *
- * This version is enhanced with two Gemini API features:
- * 1. An AI-powered explainer for each algorithm.
- * 2. An AI-powered learning path recommender.
- *
- * To make this work, you might need to add custom styles for effects like
- * 'glass-effect', 'hero-glow', 'floating-orb', and animations.
- * A sample CSS setup is provided in comments below.
- */
-/*
-  Add the following to your main CSS file (e.g., index.css) for the custom effects:
-
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-
-  @layer utilities {
-    .glass-effect {
-      @apply bg-gray-900/50 backdrop-blur-lg border-b border-gray-800;
-    }
-
-    .hero-glow {
-      @apply bg-[radial-gradient(ellipse_at_center,_rgba(139,_92,_246,_0.15)_0%,_rgba(139,_92,_246,_0)_50%)]
-    }
-
-    .floating-orb {
-      @apply bg-gradient-to-br from-purple-600 to-violet-700 filter blur-3xl;
-    }
-
-    .gradient-text {
-      @apply text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-violet-500;
-    }
-    
-    .card-hover {
-       @apply transition-all duration-300 hover:border-purple-500/50 hover:-translate-y-1;
-       border: 1px solid transparent;
-    }
-
-    @keyframes breath {
-      0%, 100% { 
-        opacity: 0.1; 
-        transform: scale(0.95); 
-      }
-      50% { 
-        opacity: 0.25; 
-        transform: scale(1.05); 
-      }
-    }
-    
-    .animate-breath {
-      animation: breath 8s ease-in-out infinite;
-    }
-    
-    @keyframes fade-in {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .animate-fade-in {
-        animation: fade-in 1s ease-out forwards;
-    }
-  }
-*/
-
-
-//=========== AI Explanation Modal Component ===========//
 const AiExplanationModal = ({ category, onClose }) => {
   const [explanation, setExplanation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -129,6 +60,8 @@ const AiExplanationModal = ({ category, onClose }) => {
       setIsLoading(false);
     }
   };
+
+  
 
   return (
     <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-fade-in">
@@ -278,6 +211,7 @@ const LearningPath = () => {
 const LandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate = useNavigate();
 
   const handleExplainClick = (category) => {
     setSelectedCategory(category);
@@ -390,7 +324,10 @@ const LandingPage = () => {
               </p>
               
               <div className="flex justify-center items-center mb-16">
-                <button className="group bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center space-x-2 border border-purple-500/20">
+                <button
+                  className="group bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center space-x-2 border border-purple-500/20"
+                  onClick={() => navigate('/algo-selection')}
+                >
                   <span>Start Visualizing</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>

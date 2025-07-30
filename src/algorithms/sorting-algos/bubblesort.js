@@ -4,18 +4,26 @@ export class BubbleSort {
     this.i = 0;
     this.j = 0;
     this.sorted = false;
+    this.comparisons = 0;
+    this.swaps = 0;
+    this.steps = 0;
+    this.totalSteps = Math.round(this.arr.length * (this.arr.length - 1)); // More accurate estimate for bubble sort
   }
 
   step() {
     if (this.sorted) return;
 
-    if (this.i < this.arr.length) {
+    this.steps++;
+    
+    if (this.i < this.arr.length - 1) {
       if (this.j < this.arr.length - this.i - 1) {
+        this.comparisons++;
         if (this.arr[this.j] > this.arr[this.j + 1]) {
           // Swap
           let temp = this.arr[this.j];
           this.arr[this.j] = this.arr[this.j + 1];
           this.arr[this.j + 1] = temp;
+          this.swaps++;
         }
         this.j++;
       } else {
@@ -41,5 +49,14 @@ export class BubbleSort {
       return Array.from({ length: this.arr.length }, (_, idx) => idx);
     }
     return Array.from({ length: this.i }, (_, idx) => this.arr.length - 1 - idx).reverse();
+  }
+
+  getMetrics() {
+    return {
+      comparisons: this.comparisons,
+      swaps: this.swaps,
+      currentStep: this.steps,
+      totalSteps: this.totalSteps
+    };
   }
 }
