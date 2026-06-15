@@ -8,10 +8,10 @@ const Controlbar = ({
   disabled,
   speed
 }) => (
-  <div className="flex-shrink-0 bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
-    <span className="text-sm text-gray-400">Controls</span>
-    <div className="flex items-center gap-4">
-      <label className="flex items-center gap-2 text-sm text-gray-300">
+  <div className="flex-shrink-0 glass-card p-4 mb-5 flex items-center justify-between gap-4 flex-wrap">
+    <span className="text-xs text-gray-500 font-medium uppercase tracking-wider">Controls</span>
+    <div className="flex items-center gap-3 flex-wrap">
+      <label className="flex items-center gap-2 text-sm text-gray-400">
         Speed
         <input
           type="range"
@@ -19,25 +19,26 @@ const Controlbar = ({
           max="100"
           value={speed}
           onChange={e => onSpeedChange(Number(e.target.value))}
-          className="accent-purple-500"
+          className="w-24"
         />
+        <span className="text-xs text-purple-400 font-mono w-8">{speed}x</span>
       </label>
       <button
-        className="group bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center space-x-2 border border-purple-500/20"
+        className="btn-ghost text-sm py-2"
         onClick={onRestart}
         disabled={disabled}
         title="Restart"
       >
-        <RotateCcw className="w-5 h-5" />
+        <RotateCcw className="w-4 h-4" />
         <span>Restart</span>
       </button>
       <button
-        className="group bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center space-x-2 border border-purple-500/20"
+        className="btn-primary text-sm py-2"
         onClick={onStart}
         disabled={disabled}
         title="Start"
       >
-        <PlayCircle className="w-5 h-5"/>
+        <PlayCircle className="w-4 h-4"/>
         <span>Start</span>
       </button>
     </div>
