@@ -38,11 +38,24 @@ export const treeSketch = (p) => {
   p.draw = () => {
     p.background(10, 10, 20);
 
+    p.push();
+    // Calculate scale factor based on width to fit 800px content inside cw
+    const scaleFactor = Math.min(1, cw / 800);
+    
+    // Center it horizontally if scaled down
+    if (scaleFactor < 1) {
+      const scaledWidth = 800 * scaleFactor;
+      p.translate((cw - scaledWidth) / 2, 0);
+    }
+    
+    p.scale(scaleFactor);
+
     if (!bst || !bst.getRoot()) {
       p.fill(100);
       p.textAlign(p.CENTER, p.CENTER);
-      p.textSize(16);
-      p.text('Click "Start" to generate a tree', p.width / 2, p.height / 2);
+      p.textSize(16 / scaleFactor);
+      p.text('Click "Start" to generate a tree', 400, ch / 2 / scaleFactor);
+      p.pop();
       return;
     }
 
@@ -64,16 +77,16 @@ export const treeSketch = (p) => {
       const values = traversal.getVisitValues();
       p.noStroke();
       p.textAlign(p.CENTER, p.CENTER);
-      p.textSize(12);
+      p.textSize(12 / scaleFactor);
       p.fill(140);
-      p.text('Traversal Order:', p.width / 2, p.height - 40);
+      p.text('Traversal Order:', 400, (ch - 40) / scaleFactor);
       
       const maxShow = Math.min(values.length, 20);
       const displayVals = values.slice(0, maxShow);
       const valStr = displayVals.join(' → ') + (values.length > maxShow ? ' ...' : '');
       p.fill(192, 132, 252);
-      p.textSize(13);
-      p.text(valStr, p.width / 2, p.height - 18);
+      p.textSize(13 / scaleFactor);
+      p.text(valStr, 400, (ch - 18) / scaleFactor);
     }
 
     // Done indicator
@@ -81,10 +94,12 @@ export const treeSketch = (p) => {
       isRunning = false;
       p.noStroke();
       p.fill(34, 197, 94, 220);
-      p.textSize(14);
+      p.textSize(14 / scaleFactor);
       p.textAlign(p.LEFT, p.TOP);
       p.text('✓ Traversal Complete', 15, 15);
     }
+    
+    p.pop();
   };
 
   function drawNode(node, visited, current) {

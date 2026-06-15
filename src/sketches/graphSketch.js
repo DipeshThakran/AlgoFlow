@@ -39,11 +39,24 @@ export const graphSketch = (p) => {
   p.draw = () => {
     p.background(10, 10, 20);
 
+    p.push();
+    // Calculate scale factor based on width to fit 1000px content inside cw
+    const scaleFactor = Math.min(1, cw / 1000);
+    
+    // Center it horizontally if scaled down
+    if (scaleFactor < 1) {
+      const scaledWidth = 1000 * scaleFactor;
+      p.translate((cw - scaledWidth) / 2, 0);
+    }
+    
+    p.scale(scaleFactor);
+
     if (!graph) {
       p.fill(100);
       p.textAlign(p.CENTER, p.CENTER);
-      p.textSize(16);
-      p.text('Click "Start" to generate a graph', p.width / 2, p.height / 2);
+      p.textSize(16 / scaleFactor);
+      p.text('Click "Start" to generate a graph', 500, ch / 2 / scaleFactor);
+      p.pop();
       return;
     }
 
@@ -178,6 +191,7 @@ export const graphSketch = (p) => {
       p.textAlign(p.LEFT, p.TOP);
       p.text('✓ Complete', 15, 15);
     }
+    p.pop();
   };
 
   function drawLegend() {

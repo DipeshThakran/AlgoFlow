@@ -55,7 +55,8 @@ const SearchingVisualizerPage = () => {
     "Jump Search"
   ];
 
-  const generateRandomArray = (size = 30, min = 10, max = 99) => {
+  const generateRandomArray = (min = 10, max = 99) => {
+    const size = window.innerWidth < 640 ? 12 : 30;
     return Array.from({ length: size }, () => Math.floor(Math.random() * (max - min + 1)) + min);
   };
 

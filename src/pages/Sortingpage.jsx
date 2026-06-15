@@ -64,7 +64,11 @@ const SortingVisualizerPage = () => {
   };
 
   const handleStart = () => {
-    const arr = generateRandomArray();
+    const arr = [];
+    const size = window.innerWidth < 640 ? 20 : 50;
+    for (let i = 0; i < size; i++) {
+      arr.push(Math.floor(Math.random() * 340) + 10);
+    }
     setValues(arr.slice());
     const sorterInstance = createSorter(selectedAlgorithm, arr);
     setSorter(sorterInstance);
