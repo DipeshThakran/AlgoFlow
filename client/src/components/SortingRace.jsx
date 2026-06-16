@@ -27,18 +27,73 @@ const ALGORITHMS = [
   { name: 'Heap Sort', sketch: heapSortSketch, Class: HeapSort },
 ];
 
+const ARRAY_TYPES = [
+  'Random',
+  'Sorted',
+  'Reverse Sorted',
+  'Nearly Sorted',
+  'Few Unique Values'
+];
+
+const ARRAY_DESCRIPTIONS = {
+  'Random': 'Default scattered data — average case for most algorithms.',
+  'Sorted': 'Already sorted — best case for Insertion Sort, worst case for naive Quick Sort.',
+  'Reverse Sorted': 'Descending order — worst case for Bubble, Insertion, and Selection Sort.',
+  'Nearly Sorted': 'Sorted with 10% elements swapped — shows Insertion Sort\'s near-best-case behavior.',
+  'Few Unique Values': 'Array with only 4 distinct values — shows behavior with many duplicates.'
+};
+
+/**
+ * Pure function to generate an array based on the requested type and size.
+ * Values are kept between 10 and 350 for visualization scaling.
+ */
+const generateArrayData = (size, type) => {
+  let arr = [];
+  switch (type) {
+    case 'Sorted':
+      for (let i = 0; i < size; i++) arr.push(10 + Math.floor(i * (340 / size)));
+      break;
+    case 'Reverse Sorted':
+      for (let i = size - 1; i >= 0; i--) arr.push(10 + Math.floor(i * (340 / size)));
+      break;
+    case 'Nearly Sorted': {
+      for (let i = 0; i < size; i++) arr.push(10 + Math.floor(i * (340 / size)));
+      const numSwaps = Math.max(1, Math.floor(size * 0.1));
+      for (let i = 0; i < numSwaps; i++) {
+        const idx1 = Math.floor(Math.random() * size);
+        const idx2 = Math.floor(Math.random() * size);
+        [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+      }
+      break;
+    }
+    case 'Few Unique Values': {
+      const uniqueValues = [50, 150, 250, 350];
+      for (let i = 0; i < size; i++) {
+        arr.push(uniqueValues[Math.floor(Math.random() * uniqueValues.length)]);
+      }
+      break;
+    }
+    case 'Random':
+    default:
+      for (let i = 0; i < size; i++) {
+        arr.push(Math.floor(Math.random() * 340) + 10);
+      }
+      break;
+  }
+  return arr;
+};
+
 const SortingRace = () => {
   const [baseArray, setBaseArray] = useState([]);
   const [sorters, setSorters] = useState(Array(6).fill(null));
   const [isRacing, setIsRacing] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]); // [{ name, time, steps }]
   const [speed, setSpeed] = useState(5);
+  const [arrayType, setArrayType] = useState('Random');
 
-  const generateArray = () => {
-    const arr = [];
-    for (let i = 0; i < 50; i++) {
-      arr.push(Math.floor(Math.random() * 340) + 10);
-    }
+  const handleGenerateNewArray = () => {
+    const size = 50;
+    const arr = generateArrayData(size, arrayType);
     setBaseArray(arr);
     
     // Initialize sorters with fresh clones
@@ -48,9 +103,10 @@ const SortingRace = () => {
     setLeaderboard([]);
   };
 
+  // Re-generate array if the type changes
   useEffect(() => {
-    generateArray();
-  }, []);
+    handleGenerateNewArray();
+  }, [arrayType]);
 
   const handleAlgorithmFinish = (index) => {
     setLeaderboard(prev => {
@@ -113,7 +169,20 @@ const SortingRace = () => {
           </label>
         </div>
         <div className="flex items-center gap-3">
-          <button className="btn-ghost py-2 text-sm" onClick={generateArray} disabled={isRacing}>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-400">Array Type:</span>
+            <select
+              value={arrayType}
+              onChange={(e) => setArrayType(e.target.value)}
+              disabled={isRacing}
+              className="bg-black/30 border border-white/10 rounded-lg text-sm text-white px-3 py-2 outline-none focus:border-purple-500 transition-colors"
+            >
+              {ARRAY_TYPES.map(type => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+          <button className="btn-ghost py-2 text-sm" onClick={handleGenerateNewArray} disabled={isRacing}>
             <RefreshCw className="w-4 h-4" />
             New Array
           </button>
@@ -122,6 +191,10 @@ const SortingRace = () => {
             Start Race
           </button>
         </div>
+      </div>
+
+      <div className="text-sm text-gray-500 px-1 text-center sm:text-left">
+        {ARRAY_DESCRIPTIONS[arrayType]}
       </div>
 
       {/* Grid of 6 */}

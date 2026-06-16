@@ -20,6 +20,7 @@ export class QuickSort {
   
       if (this.stack.length === 0) {
         this.sorted = true;
+        // Ensure all are marked as sorted, just in case
         this.sortedIndices = Array.from({ length: this.arr.length }, (_, idx) => idx);
         return;
       }
@@ -28,11 +29,18 @@ export class QuickSort {
       let { left, right } = top;
   
       if (left >= right) {
+        if (left === right && !this.sortedIndices.includes(left)) {
+          this.sortedIndices.push(left);
+        }
         this.stack.pop();
         return;
       }
   
       if (this.i === null) {
+        // Use middle element as pivot to avoid O(N^2) on sorted/reverse sorted arrays
+        const mid = Math.floor((left + right) / 2);
+        [this.arr[mid], this.arr[right]] = [this.arr[right], this.arr[mid]];
+        
         this.pivot = this.arr[right];
         this.i = left - 1;
         this.j = left;
@@ -50,6 +58,12 @@ export class QuickSort {
         [this.arr[this.i + 1], this.arr[right]] = [this.arr[right], this.arr[this.i + 1]];
         this.swaps++;
         let pi = this.i + 1;
+        
+        // Pivot is now in its final sorted position
+        if (!this.sortedIndices.includes(pi)) {
+          this.sortedIndices.push(pi);
+        }
+        
         this.stack.pop();
         this.stack.push({ left: left, right: pi - 1 });
         this.stack.push({ left: pi + 1, right: right });
@@ -64,7 +78,7 @@ export class QuickSort {
     }
   
     getCurrentIndices() {
-      return [this.i, this.j];
+      return [this.i !== null ? this.i : -1, this.j !== null ? this.j : -1];
     }
   
     getSortedIndices() {

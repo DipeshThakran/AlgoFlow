@@ -7,6 +7,7 @@ import AlgorithmSelectionPage from './pages/Algoselection';
 import SearchingVisualizerPage from './pages/Searchingpage';
 import GraphVisualizerPage from './pages/GraphVisualizerPage';
 import TreeVisualizerPage from './pages/TreeVisualizerPage';
+import ComplexityAnalyzer from './pages/ComplexityAnalyzer';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -54,6 +55,11 @@ function AnimatedRoutes() {
         <Route path="/visualizer/tree" element={
           <div className="w-full h-full flex flex-col flex-1">
             <TreeVisualizerPage />
+          </div>
+        } />
+        <Route path="/analyzer" element={
+          <div className="w-full h-full flex flex-col flex-1">
+            <ComplexityAnalyzer />
           </div>
         } />
       </Routes>

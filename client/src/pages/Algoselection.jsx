@@ -76,6 +76,15 @@ export default function AlgorithmSelectionPage() {
       shadowColor: "shadow-emerald-500/20",
       count: 4,
       link: "/visualizer/tree"
+    },
+    {
+      title: "Complexity Analyzer",
+      description: "Paste your code snippet to get an AI-powered estimate of its time and space complexity with detailed reasoning.", 
+      icon: <Code2 className="w-8 h-8" />,
+      color: "from-pink-500 to-rose-500",
+      shadowColor: "shadow-pink-500/20",
+      count: 1,
+      link: "/analyzer"
     }
   ];
 

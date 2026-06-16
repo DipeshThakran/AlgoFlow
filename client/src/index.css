@@ -780,3 +780,13 @@ input[type="text"]:focus {
   background: rgba(255, 255, 255, 0.3);
   filter: blur(4px);
 }
+
+@keyframes progress-infinite {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-progress {
+  width: 100%;
+  animation: progress-infinite 1.5s ease-in-out infinite;
+}
