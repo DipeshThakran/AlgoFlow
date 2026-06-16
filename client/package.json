@@ -12,6 +12,7 @@
     "dev": "vite"
   },
   "dependencies": {
+    "@google/genai": "^2.8.0",
     "@tailwindcss/vite": "^4.1.11",
     "@types/p5": "^1.7.6",
     "axios": "^1.11.0",
