@@ -11,6 +11,8 @@ import { Graph } from '../algorithms/graph-algos/graph';
 import { Dijkstra } from '../algorithms/graph-algos/dijkstra';
 import { BFS } from '../algorithms/graph-algos/bfs';
 import { DFS } from '../algorithms/graph-algos/dfs';
+import { AStar } from '../algorithms/graph-algos/astar';
+import { Prims } from '../algorithms/graph-algos/prims';
 
 const algorithmDescriptions = {
   "Dijkstra's Algorithm": {
@@ -34,6 +36,20 @@ const algorithmDescriptions = {
     worstCase: 'O(V + E)',
     space: 'O(V) — stack and visited set',
   },
+  "A* Search (A-Star)": {
+    description: "A pathfinding algorithm that finds the shortest path by using a heuristic to guide the search.",
+    howItWorks: "It combines Dijkstra's uniform-cost search with a heuristic (like Euclidean distance) that estimates the cost to reach the target, prioritizing nodes that appear closer to the goal.",
+    bestCase: 'O(E)',
+    worstCase: 'O(E log V)',
+    space: 'O(V)',
+  },
+  "Prim's Algorithm (MST)": {
+    description: "A greedy algorithm that finds a Minimum Spanning Tree for a weighted undirected graph.",
+    howItWorks: "It starts with a single node and continuously adds the cheapest edge that connects a visited node to an unvisited node until all nodes are connected.",
+    bestCase: 'O(E log V)',
+    worstCase: 'O(E log V)',
+    space: 'O(V)',
+  },
 };
 
 const GraphVisualizerPage = () => {
@@ -48,6 +64,8 @@ const GraphVisualizerPage = () => {
 
   const graphAlgorithms = [
     "Dijkstra's Algorithm",
+    "A* Search (A-Star)",
+    "Prim's Algorithm (MST)",
     "Breadth-First Search (BFS)",
     "Depth-First Search (DFS)"
   ];
@@ -66,6 +84,12 @@ const GraphVisualizerPage = () => {
         break;
       case "Depth-First Search (DFS)":
         algo = new DFS(g, 0);
+        break;
+      case "A* Search (A-Star)":
+        algo = new AStar(g, 0, 4); // Target node is 4 (far right)
+        break;
+      case "Prim's Algorithm (MST)":
+        algo = new Prims(g, 0);
         break;
       default:
         algo = new Dijkstra(g, 0);

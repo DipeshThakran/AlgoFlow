@@ -427,7 +427,7 @@ const LandingPage = () => {
       title: "Graph Algorithms",
       description: "Explore pathfinding and graph traversal on interactive node-based structures",
       icon: <GitBranch className="w-6 h-6" />,
-      algorithms: ["Dijkstra's Algorithm", "Breadth-First Search (BFS)", "Depth-First Search (DFS)"],
+      algorithms: ["Dijkstra's Algorithm", "A* Search", "Prim's Algorithm", "BFS", "DFS"],
       color: "from-violet-500 to-fuchsia-500",
       link: "/visualizer/graph",
     },
@@ -563,7 +563,7 @@ const LandingPage = () => {
               <div className="grid grid-cols-3 max-w-lg mx-auto gap-6 animate-fade-in-up delay-400">
                 <div className="text-center">
                   <div className="text-3xl md:text-4xl font-bold gradient-text">
-                    <AnimatedCounter end={15} suffix="+" />
+                    <AnimatedCounter end={17} suffix="+" />
                   </div>
                   <p className="text-sm text-gray-500 mt-1">Algorithms</p>
                 </div>

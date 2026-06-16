@@ -65,7 +65,7 @@ export default function AlgorithmSelectionPage() {
       icon: <GitBranch className="w-8 h-8" />,
       color: "from-violet-500 to-fuchsia-500",
       shadowColor: "shadow-violet-500/20",
-      count: 3,
+      count: 5,
       link: "/visualizer/graph"
     },
     {
